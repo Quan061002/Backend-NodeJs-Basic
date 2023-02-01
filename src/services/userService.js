@@ -149,7 +149,7 @@ let deleteUser = (userId) => {
         }
 
         await db.User.destroy({
-            where: { id : userId}
+            where: { id : userId }
         })
 
         resolve({
@@ -165,7 +165,7 @@ let updateUserData = (data) => {
             if(!data.id) {
                 resolve({
                     errCode: 2,
-                    message: 'Missing required parameters'
+                    errMessage: 'Missing required parameters'
                 })
             }
             let user = await db.User.findOne({
