@@ -22,7 +22,7 @@ let handleUserLogin = (email, password) => {
             if(isExit) {
                 // user already exist
                 let user = await db.User.findOne({
-                    attributes: ['email', 'roleId', 'password'],
+                    attributes: ['email', 'roleId', 'password', 'firstName', 'lastName'],
                     where: { email : email },
                     raw: true,
 
@@ -139,7 +139,7 @@ let createNewUser = (data) => {
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         let foundUser = await db.user.findOne({
-            where: {id: userId}
+            where: { id: userId }
         })
         if (!foundUser) {
             resolve({
@@ -205,7 +205,7 @@ let getAllCodeService = (typeInput) => {
                 })
             } else {
                 let res = {};
-                let allcode = await db.Allcode.findAll({
+                let allcode = await db.allcode.findAll({
                     where: {type: typeInput }
                 });
                 res.errCode = 0;
