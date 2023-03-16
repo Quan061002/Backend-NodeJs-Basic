@@ -25,8 +25,11 @@
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.20.0"
+    "sequelize": "^6.20.0",
+    "vue-loader": "^17.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

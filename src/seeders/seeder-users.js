@@ -13,8 +13,9 @@ module.exports = {
       lastName: 'quana',
       address: 'USA',
       gender: 1,
-
-      // keyRole: 'R1',
+      phonenumber: 1111,
+      positionId: P0,
+      roleId: R1,
 
       createdAt: new Date(),
       updatedAt: new Date()
