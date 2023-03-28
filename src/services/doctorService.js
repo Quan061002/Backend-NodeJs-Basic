@@ -1,6 +1,6 @@
 import db from "../models/index";
 require('dotenv').config();
-import _, { intersection} from 'lodash';
+import _ from 'lodash';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -157,7 +157,18 @@ let getDetailDoctorById= (inputId) => {
                         },
 
                         { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                        {
+                            model: db.Doctor_Infor,
+                            attributes: {
+                                exclude: ['id', 'doctorId']
+                            },
+                            include: [
+                                { model: db.Allcode, as: 'priceTypeData', attributes : ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'provinceTypeData', attributes : ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentTypeData', attributes : ['valueEn', 'valueVi'] },
+                            ]
 
+                        },
                     ],
                     raw: false,
                     nest: true
@@ -200,7 +211,7 @@ let bulkCreateSchedule = (data) => {
                 let existing = await db.Schedule.findAll(
                     {
                         where: { doctorId: data.doctorId, date: data.formatedDate },
-                        attrbutes: ['timeType', 'date', 'doctorId', 'maxNumber'],
+                        attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
                         raw: true
                     }
                 );
@@ -259,6 +270,43 @@ let getScheduleByDate = (doctorId, date) => {
         }catch (e) {
             reject(e);
         }
+    })
+}
+
+let getExtraInforDoctorById = (idInput) => {
+    return new Promise(async (resolve, reject) => {
+        try{
+            if(!idInput) {
+                resolve({
+                    errCode: -1,
+                    errMessage: 'Missing required parameters'
+                })
+            }else {
+                let data = await db.Doctor_Infor.findOne({
+                    where: {
+                        doctorId: idInput
+                    },
+                    attributes: {
+                        exclude: ['id', 'doctorid']
+                    },
+                    include: [
+                        {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
+                        {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                        {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: false,
+                    nest: true
+                })
+
+                if(!data) data = {};
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+        }catch (e) {
+            reject(e);
+        } 
     })
 }
 module.exports = {
