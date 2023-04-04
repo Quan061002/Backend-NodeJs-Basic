@@ -28,6 +28,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.9.1",
     "sequelize": "^6.20.0",
     "vue-loader": "^17.0.1"
   },

@@ -240,7 +240,7 @@ let bulkCreateSchedule = (data) => {
 let getScheduleByDate = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {
         try{
-            if (!doctor || !date) {
+            if (!doctorId || !date) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameters'
@@ -253,7 +253,10 @@ let getScheduleByDate = (doctorId, date) => {
                     },
 
                     include: [
-                        { model: AbortController.Allcode, as: 'timeTypeData', attrbutes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'timeTypeData', attrbutes: ['valueEn', 'valueVi'] },
+
+                        { model: db.User, as: 'doctorData', attrbutes: ['firstName', 'lastName' ]},
+
                     ],
                     raw: false,
                     nest: true
